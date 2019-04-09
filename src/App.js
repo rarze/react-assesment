@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Greet from './components/greet';
+import Languages from './components/language';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      names: []
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <p>React assessment app</p>
         </header>
+        <main>
+          <div className="App-main">
+            <Languages/>
+            <Greet names={this.state.names}/>
+          </div>
+        </main>
       </div>
     );
   }
