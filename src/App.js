@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import './App.css';
 import Greet from './components/greet';
 import Languages from './components/language';
-import Names from './components/nameinput'
+import Names from './components/nameinput';
+
 const GREETINGS = {
   'english': 'Hello',
   'spanish': 'Hola',
   'italian': 'Ciao'
 }
-const LANGUAGES = ['english', 'spanish', 'italian']
+
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    console.log(props.store.getState())
     this.state = {
       names: [],
-      currentGreeting: 'Hello',
-      currentLanguage: 'english'
+      greeting: 'Hello',
     }
   }
 
+  getChildContext() {
+    return {
+      store: this.props.store
+    }
+  }
+
+  componentWillMount() {
+    this.unsubscribe = this.props.store.subscribe(
+        () => this.forceUpdate()
+    )
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   handleLanguageChange = (event) => {
-    this.setState({currentLanguage: event.target.value, currentGreeting: GREETINGS[event.target.value]})
+    this.setState({greeting: GREETINGS[event.target.value]})
   }
 
   addName = (event) => {
@@ -31,6 +49,7 @@ class App extends Component {
   }
 
   render() {
+    const { names, greeting } = this.props.store.getState()
     return (
       <div className="App">
         <header className="App-header">
@@ -38,14 +57,23 @@ class App extends Component {
         </header>
         <main>
           <div className="App-main">
-            <Languages languages={LANGUAGES} languageChange={this.handleLanguageChange}/>
-            <Names addName={this.addName}/>
-            <Greet greeting={this.state.currentGreeting} names={this.state.names} languageChange={this.handleLanguageChange}/>
+            <Languages languages={Object.keys(GREETINGS)} languageChange={this.handleLanguageChange}/>
+            <Names/>
+            <Greet greeting={this.state.greeting} names={names} languageChange={this.handleLanguageChange}/>
           </div>
         </main>
       </div>
     );
   }
+
+}
+
+App.propTypes = {
+  store: PropTypes.object
+}
+
+App.childContextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 export default App;
