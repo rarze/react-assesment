@@ -5,21 +5,7 @@ import Greet from './components/greet';
 import Languages from './components/language';
 import Names from './components/nameinput';
 
-const GREETINGS = {
-  'english': 'Hello',
-  'spanish': 'Hola',
-  'italian': 'Ciao'
-}
-
 class App extends Component {
-  constructor(props) {
-    super(props)
-    console.log(props.store.getState())
-    this.state = {
-      names: [],
-      greeting: 'Hello',
-    }
-  }
 
   getChildContext() {
     return {
@@ -37,19 +23,7 @@ class App extends Component {
     this.unsubscribe()
   }
 
-  handleLanguageChange = (event) => {
-    this.setState({greeting: GREETINGS[event.target.value]})
-  }
-
-  addName = (event) => {
-    let newValues = event.target.value.split('\n')
-    if (!!newValues) {
-      this.setState({names: newValues.filter(value => value !== '')})
-    }
-  }
-
   render() {
-    const { names, greeting } = this.props.store.getState()
     return (
       <div className="App">
         <header className="App-header">
@@ -57,9 +31,9 @@ class App extends Component {
         </header>
         <main>
           <div className="App-main">
-            <Languages languages={Object.keys(GREETINGS)} languageChange={this.handleLanguageChange}/>
+            <Languages/>
             <Names/>
-            <Greet greeting={this.state.greeting} names={names} languageChange={this.handleLanguageChange}/>
+            <Greet/>
           </div>
         </main>
       </div>

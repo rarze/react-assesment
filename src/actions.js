@@ -6,6 +6,6 @@ export const addName = names => ({
 })
 
 export const updateGreeting = greeting => ({
-    type: Constants.UPDATE_NAMES,
+    type: Constants.UPDATE_GREETING,
     greeting: greeting
 })
