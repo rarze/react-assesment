@@ -6,12 +6,12 @@ import { updateGreeting } from "../actions";
 const Language = (props, {store}) => {
 
     const updateLanguage = (event) => {
-        const newGreeting = Constants.GREETINGS[event.target.value]
+        const newGreeting = Constants.GREETINGS.filter(greetingData => greetingData.language === event.target.value)[0].greeting;
         store.dispatch(updateGreeting(newGreeting))
     }
 
-    const languageOptions = Object.keys(Constants.GREETINGS).map((language) =>
-        <option key={language}>{language}</option>
+    const languageOptions = Constants.GREETINGS.map((greetingData) =>
+        <option key={greetingData.language}>{greetingData.language}</option>
     );
 
     return (
@@ -24,7 +24,7 @@ const Language = (props, {store}) => {
 }
 
 Language.contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
 }
 
 export default Language;

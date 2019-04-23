@@ -6,8 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import storeFactory from "./store";
 
 const store = storeFactory()
-window.React = React
-window.store = store
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
