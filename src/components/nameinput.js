@@ -13,7 +13,7 @@ const Names = (props, {store}) => {
     }
 
     return (
-        <textarea onChange={updateNames}></textarea>
+        <textarea onChange={updateNames}>{store.getState().names.join("\n")}</textarea>
     );
 
 }
