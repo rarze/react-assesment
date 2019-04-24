@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import '.././App.css';
 
-const Greet = (props, {store}) => {
-    const {names, greeting} = store.getState()
+const Greet = ({names=[], greeting=''}) => {
     const listItems = names.map((name) =>
         <li key={name.toString()}>
             {greeting}, {name}
@@ -18,8 +17,9 @@ const Greet = (props, {store}) => {
     );
 }
 
-Greet.contextTypes = {
-    store: PropTypes.object
+Greet.propTypes = {
+    names: PropTypes.array,
+    greeting: PropTypes.string
 }
 
 export default Greet;

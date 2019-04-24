@@ -1,25 +1,12 @@
 import React from 'react'
-import {addName} from "../actions";
 import PropTypes from 'prop-types'
 
-const Names = (props, {store}) => {
+const Names = ({names=[], onChange=f=>f}) =>
+    <textarea onChange={event => onChange(event)} defaultValue={names.join("\n")}></textarea>
 
-    const updateNames = (event) => {
-        let newValues = event.target.value.split('\n')
-            .filter(value => value !== '')
-        if (!!newValues) {
-            store.dispatch(addName(newValues))
-        }
-    }
-
-    return (
-        <textarea onChange={updateNames}>{store.getState().names.join("\n")}</textarea>
-    );
-
-}
-
-Names.contextTypes = {
-    store: PropTypes.object
+Names.propTypes = {
+    names: PropTypes.array,
+    onChange: PropTypes.func
 }
 
 export default Names;
